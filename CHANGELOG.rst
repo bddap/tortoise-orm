@@ -10,12 +10,14 @@ Changelog
 0.25
 ====
 
-0.25.1
-------------------
+0.25.2
+------
 Fixed
 ^^^^^
 - Remove sensitive query parameters from debug logging to prevent exposure of passwords, tokens, and personal data (#1996)
 
+0.25.1
+------
 Changed
 ^^^^^
 - Force async task switch every 2000 rows when converting db objects to python objects to avoid blocking the event loop (#1939)

@@ -123,7 +123,7 @@ class ODBCClient(BaseDBAsyncClient, ABC):
     @translate_exceptions
     async def execute_many(self, query: str, values: list) -> None:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             async with connection.cursor() as cursor:
                 try:
                     await cursor.executemany(query, values)
@@ -136,7 +136,7 @@ class ODBCClient(BaseDBAsyncClient, ABC):
     @translate_exceptions
     async def execute_query(self, query: str, values: list | None = None) -> tuple[int, list[dict]]:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             async with connection.cursor() as cursor:
                 if values:
                     await cursor.execute(query, values)
@@ -184,7 +184,7 @@ class ODBCTransactionWrapper(TransactionalDBClient):
     @translate_exceptions
     async def execute_many(self, query: str, values: list) -> None:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             cursor = await connection.cursor()
             await cursor.executemany(query, values)
 

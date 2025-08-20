@@ -179,7 +179,7 @@ class MySQLClient(BaseDBAsyncClient):
     @translate_exceptions
     async def execute_insert(self, query: str, values: list) -> int:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             async with connection.cursor() as cursor:
                 await cursor.execute(query, values)
                 return cursor.lastrowid  # return auto-generated id
@@ -187,7 +187,7 @@ class MySQLClient(BaseDBAsyncClient):
     @translate_exceptions
     async def execute_many(self, query: str, values: list) -> None:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             async with connection.cursor() as cursor:
                 if self.capabilities.supports_transactions:
                     await connection.begin()
@@ -204,7 +204,7 @@ class MySQLClient(BaseDBAsyncClient):
     @translate_exceptions
     async def execute_query(self, query: str, values: list | None = None) -> tuple[int, list[dict]]:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             async with connection.cursor() as cursor:
                 await cursor.execute(query, values)
                 rows = await cursor.fetchall()
@@ -244,7 +244,7 @@ class TransactionWrapper(MySQLClient, TransactionalDBClient):
     @translate_exceptions
     async def execute_many(self, query: str, values: list) -> None:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             async with connection.cursor() as cursor:
                 await cursor.executemany(query, values)
 

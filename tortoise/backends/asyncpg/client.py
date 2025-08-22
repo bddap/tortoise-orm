@@ -107,14 +107,14 @@ class AsyncpgDBClient(BasePostgresClient):
     @translate_exceptions
     async def execute_insert(self, query: str, values: list) -> asyncpg.Record | None:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             # TODO: Cache prepared statement
             return await connection.fetchrow(query, *values)
 
     @translate_exceptions
     async def execute_many(self, query: str, values: list) -> None:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             # TODO: Consider using copy_records_to_table instead
             transaction = connection.transaction()
             await transaction.start()
@@ -129,7 +129,7 @@ class AsyncpgDBClient(BasePostgresClient):
     @translate_exceptions
     async def execute_query(self, query: str, values: list | None = None) -> tuple[int, list[dict]]:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             if values:
                 params = [query, *values]
             else:
@@ -148,7 +148,7 @@ class AsyncpgDBClient(BasePostgresClient):
     @translate_exceptions
     async def execute_query_dict(self, query: str, values: list | None = None) -> list[dict]:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             if values:
                 return list(map(dict, await connection.fetch(query, *values)))
             return list(map(dict, await connection.fetch(query)))
@@ -180,7 +180,7 @@ class TransactionWrapper(AsyncpgDBClient, TransactionalDBClient):
     @translate_exceptions
     async def execute_many(self, query: str, values: list) -> None:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             # TODO: Consider using copy_records_to_table instead
             await connection.executemany(query, values)
 

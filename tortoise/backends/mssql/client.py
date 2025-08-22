@@ -51,7 +51,7 @@ class MSSQLClient(ODBCClient):
     @translate_exceptions
     async def execute_insert(self, query: str, values: list) -> int:
         async with self.acquire_connection() as connection:
-            self.log.debug("%s: %s", query, values)
+            self.log.debug("%s", query)
             async with connection.cursor() as cursor:
                 await cursor.execute(query, values)
                 await cursor.execute("SELECT @@IDENTITY;")

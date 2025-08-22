@@ -10,8 +10,8 @@ Changelog
 0.25
 ====
 
-0.25.2
-------
+[Unreleased]
+------------
 Fixed
 ^^^^^
 - Remove sensitive query parameters from debug logging to prevent exposure of passwords, tokens, and personal data (#1996)

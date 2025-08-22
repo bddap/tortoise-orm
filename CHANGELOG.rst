@@ -7,17 +7,14 @@ Changelog
 
 .. rst-class:: emphasize-children
 
-[Unreleased]
-============
-Fixed
------
-- Remove sensitive query parameters from debug logging to prevent exposure of passwords, tokens, and personal data (#1996)
-
 0.26
 ====
 
 0.26.0 (unreleased)
-------------------- 
+-------------------
+Fixed
+^^^^^
+- Remove sensitive query parameters from debug logging to prevent exposure of passwords, tokens, and personal data (#1996) 
 Added
 ^^^^^
 - Add `create()` method to reverse ForeignKey relations, enabling `parent.children.create()` syntax
